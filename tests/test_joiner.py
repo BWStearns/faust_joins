@@ -70,7 +70,7 @@ class TestJoins(unittest.TestCase):
 
         dummy_tbl.default = None
 
-        terminal_db_processor = make_joining_func(
+        my_thing_merger = make_joining_func(
             tbl=dummy_tbl,
             key_fn=(lambda r: r.thing_id),
             merge_fn=merge_things,
@@ -86,7 +86,7 @@ class TestJoins(unittest.TestCase):
         self.assertEqual(len(dummy_tbl), 0)
 
         # PROCESING A THING
-        terminal_db_processor(message_1_1)
+        my_thing_merger(message_1_1)
 
         # Added thing 1 part 1, There should be one record in the table
         self.assertEqual(len(dummy_tbl), 1)
@@ -95,19 +95,19 @@ class TestJoins(unittest.TestCase):
         self.assertEqual(len(dummy_tbl), 1)
 
         # PROCESING A THING
-        terminal_db_processor(message_2_1)
+        my_thing_merger(message_2_1)
 
         # Added a part from a second thing, so now we have two things in the table.
         self.assertEqual(len(dummy_tbl), 2)
 
         # PROCESING A THING
-        terminal_db_processor(message_1_2)
+        my_thing_merger(message_1_2)
 
         # The first thing should be complete now, so now we have one thing in the table.
         self.assertEqual(len(dummy_tbl), 1)
 
         # Processing the last thing
-        terminal_db_processor(message_2_2)
+        my_thing_merger(message_2_2)
 
         # All done! No more things.
         self.assertEqual(len(dummy_tbl), 0)
