@@ -12,7 +12,7 @@ keywords = ["Faust",
 
 [tool.poetry.dependencies]
 python = "^3.6"
-faust = "^1.10.4"
+faust = "^1.9.0"
 
 [tool.poetry.dev-dependencies]
 
