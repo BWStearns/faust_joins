@@ -2,7 +2,7 @@
 
 _A library for joining together fanned out messages in a Faust pipeline._
 
-Soemtimes it might be advantageous to have a pipeline split out and conduct multiple time-consuming operations in parallel, and then do something with all the results once all those operations are completed.
+Sometimes it might be advantageous to have a pipeline split out and conduct multiple time-consuming operations in parallel, and then do something with all the results once all those operations are completed.
 
 This library gives you a simple way to merge multiple streams back into a single stream in pretty arbitrary ways.
 
