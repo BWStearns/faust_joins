@@ -4,7 +4,7 @@ import logging
 
 from faust import Record
 
-from joins.joiner import make_joining_func, TableJoinDefaultException
+from faust_joins.joiner import make_joining_func, TableJoinDefaultException
 
 
 def things_both_there(record):

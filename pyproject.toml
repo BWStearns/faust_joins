@@ -1,9 +1,14 @@
 [tool.poetry]
-name = "faust_joins"
-version = "0.1.0"
+name = "faust-joins"
+version = "0.1.1"
 description = "Join Faust Streams"
 authors = ["Brian Stearns <brian.stearns@kensho.com>"]
 license = "MIT"
+repository = "https://github.com/BWStearns/faust_joins"
+documentation = "https://github.com/BWStearns/faust_joins"
+keywords = ["Faust",
+            "joins",
+            "kafka"]
 
 [tool.poetry.dependencies]
 python = "^3.6"
@@ -14,3 +19,6 @@ faust = "^1.10.4"
 [build-system]
 requires = ["poetry>=0.12"]
 build-backend = "poetry.masonry.api"
+
+[tool.poetry.urls]
+issues = "https://github.com/BWStearns/faust_joins/issues"
