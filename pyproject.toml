@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "faust-joins"
-version = "0.1.2"
+version = "0.1.3"
 description = "Join Faust Streams"
 authors = ["Brian Stearns <brian.stearns@kensho.com>"]
 license = "MIT"
