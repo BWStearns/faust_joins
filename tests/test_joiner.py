@@ -33,12 +33,17 @@ class TestMessageFormat(Record, serializer="json"):
     thing_one: str
     thing_two: str
 
+class TestStorageFormat(TestMessageFormat):
+    cat_in_hat: bool
 
 def merge_things(t1, t2):
-    return TestMessageFormat(
+    # Handle the optional second argument since the first part will have a None
+    t2 = t2 if t2 is not None else t1
+    return TestStorageFormat(
         thing_id=t1.thing_id,
         thing_one=(t1.thing_one or t2.thing_one),
         thing_two=(t1.thing_two or t2.thing_two),
+        cat_in_hat=True,
     )
 
 
@@ -111,3 +116,20 @@ class TestJoins(unittest.TestCase):
 
         # All done! No more things.
         self.assertEqual(len(dummy_tbl), 0)
+
+        # Test that default processor and incomplete handlers work.
+        my_thing_merger = make_joining_func(
+            tbl=dummy_tbl,
+            key_fn=(lambda r: r.thing_id),
+            merge_fn=merge_things,
+            sufficiency_fn=things_both_there,
+        )
+
+        # Start Empty
+        self.assertEqual(len(dummy_tbl), 0)
+
+        # PROCESING A THING
+        my_thing_merger(message_1_1)
+        res = my_thing_merger(message_1_2)
+        expected = TestStorageFormat(m1_uuid, "one fish", "two fish", cat_in_hat=True)
+        self.assertEqual(res, expected)

@@ -1,6 +1,6 @@
 # Faust Joins
 
-_A library for joining together fanned out messages in a Faust pipeline._
+_A very small library for joining together fanned out messages in a Faust pipeline._
 
 Sometimes it might be advantageous to have a pipeline split out and conduct multiple time-consuming operations in parallel, and then do something with all the results once all those operations are completed.
 
@@ -92,7 +92,7 @@ Next we have a `merge_fn`, which takes a new message, and a possibly partially c
 
 **Sufficiency Check**
 
-Next we have a `sufficiency_fn`, which should be a predicate function that takes in whatever type you're using for the value in the Table (the return type of your merge function), and returns a `True` or `False`. If it returns True, then the `process_fn` will be called on the value that was passed in. Else, the `handle_incomplete_fn` will be called on it if the function exists, or it will simply pass.
+Next we have a `sufficiency_fn`, which should be a predicate function that takes in whatever type you're using for the value in the Table (the return type of your merge function), and returns a `True` or `False`. If it returns `True`, then the `process_fn` will be called on the value that was passed in. Else, the `handle_incomplete_fn` will be called on it if the function exists, or it will simply pass.
 
 **Handling Incomplete Records**
 
@@ -100,13 +100,11 @@ The `handle_incomplete_fn` will be called on the result of the merge function if
 
 **Process Function**
 
-The `process_fn` is called on the result of the merge function when the `sufficiency_fn` returns `True`. It can return anything you want and that will also be the return value of the function created by `make_joining_func`, so if you want to do something with the resulting value outside of the joining logic then you can simply use `lambda x = x` as the `process_fn` and bind the result to a variable in the `async for` loop.
+The `process_fn` is an optional function that is called on the result of the merge function when the `sufficiency_fn` returns `True`. It can return anything you want and that will also be the return value of the function created by `make_joining_func`. If you don't provide a function the default is the identity function, so the overall joining function created by `make_joining_func` will be the thing that was returned by the merging function that `sufficiency_fn` returns `True` for.
 
 
-#### TODO
+#### Plans
 
-- make `process_fn` optional and make the default the identity function.
-- make merge function type `A -> (Optional B) -> B` so the merge function doesn't need to be able to handle the initial case.
-
-
+- Maybe make some convenience functions for operations that seem common?
+- If you have any then either open a github issue or ping BWStearns on the Faust slack.
 

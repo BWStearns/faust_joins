@@ -37,8 +37,8 @@ def make_joining_func(
     key_fn: Callable,
     merge_fn: Callable,
     sufficiency_fn: Callable,
-    process_fn: Callable,
-    handle_incomplete_fn: Optional[Callable],
+    process_fn: Optional[Callable] = None,
+    handle_incomplete_fn: Optional[Callable] = None,
 ) -> Callable:
     """Handle the Joining logic for agents.
 
@@ -70,10 +70,11 @@ def make_joining_func(
     if tbl.default is not None:
         raise TableJoinDefaultException
     incomplete_handler = handle_incomplete_fn or (lambda r: None)
+    process_fn = process_fn or (lambda x: x)
 
     def processor_function(new_message):
         k = key_fn(new_message)
-        extant_message = tbl.get(k, new_message)
+        extant_message = tbl.get(k, None)
         tbl[k] = merge_fn(new_message, extant_message)
         updated_message = tbl[k]
         if sufficiency_fn(updated_message):
