@@ -108,5 +108,3 @@ The `process_fn` is an optional function that is called on the result of the mer
 - Maybe make some convenience functions for operations that seem common?
 - Repoint dependency to the new main faust repo.
 - If you have any then either open a github issue or ping BWStearns on the Faust slack.
-
-Testing branch protection.
